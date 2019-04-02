@@ -1,0 +1,19 @@
+#app {
+    display: inline;
+}
+
+ul {
+    display: inline-flex
+}
+
+li {
+    margin: 70px;
+    list-style: none;
+    text-align:center;
+    background-color: white;
+    color: #6200EE;
+}
+
+a {
+    text-decoration-line: none
+}
