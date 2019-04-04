@@ -52,7 +52,7 @@ module.exports = {
     addWord: function (id, word, def, example, callback) { 
         var con = new db.msSqlConnecter(config); 
         con.connect().then(function () { 
-            new con.Request("insert into word values(@id,@word,@def,@example)") 
+            new con.Request("insert into word values(@word,@def,@example)") 
             .addParam("id", TYPES.NVarChar, id) 
             .addParam("word", TYPES.NVarChar, word) 
             .addParam("def", TYPES.NVarChar, def) 

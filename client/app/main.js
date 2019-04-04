@@ -11,8 +11,8 @@ const wordTemplate = (word) => `
       <p>${word.Example}</p>
     </section>
   </a>
-  <a href="#/words/${word.WordID}/update"><button data-update-button-id="${word.WordID}" class="btn-update">Edit</button></a>
-  <a href="#/words/${word.WordID}/delete"><button data-delete-button-id="${word.WordID}" class="btn-delete">Delete</button></a>
+  <a href="#/words/update/${word.WordID}"><button data-update-button-id="${word.WordID}" class="btn-update">Edit</button></a>
+  <a href="#/words/delete/${word.WordID}"><button data-delete-button-id="${word.WordID}" class="btn-delete">Delete</button></a>
 </section>
 `;
 
@@ -98,17 +98,45 @@ app.addComponent({
 app.addComponent({
     name: 'wordEdit',
     model: {
-        word: {}
+        word: {},
+        wordUpdate(id, word, def, example) {
+            data = {
+                "id": id,
+                "word": word,
+                "def": def,
+                "example": example
+            }
+            fetch("http://localhost:3000/words/update", {
+                method: 'PUT',
+                body: JSON.stringify(data)
+            })
+        }
     },
     view(model) {
-        return ;                                                                                                                  
+        update = function(event) {
+            //alert('helloooo');
+            event.preventDefault();
+            form = document.getElementById('updateForm');
+            model.wordUpdate(form.id.value, form.word.value, form.def.value, form.example.value);
+        }
+
+        return `<form id="updateForm" onsubmit="return update(event)">
+            <input name="id" value=${model.word.WordID}></input>
+            <label>Word</lable>
+            <input name="word" value =""></input>
+            <label>Meaning</lable>
+            <input name="def" value=""></input>
+            <label>Example</lable>
+            <input name="example" value=""></input>
+            <input type="submit" id="updateBtn" value="Update"></input>
+        </form>`;                                                                                                                  
     },
     controller(model) {
         api
             .getWord(router.params[1])
             .then(result => {
                 model.word = result[0];
-            });                                          
+            });  
     }
 });
 
@@ -122,7 +150,7 @@ app.addComponent({
     },
     controller(model) {
         api
-            .getWord(router.params[1])
+            .getWord(router.params[0])
             .then(result => {
                 model.word = result[0];
             });                                          
@@ -141,12 +169,30 @@ router.addRoute('words', '^#/words$');
 router.addRoute('word', '^#/words/([0-9]*)$');
 
 /** Word Update */
-router.addRoute('wordEdit', '^#/words/([0-9]*/update)$');
+router.addRoute('wordEdit', '^#/words/update/([0-9]*)$');
 
 /** Word Update */
-router.addRoute('wordDelete', '^#/words/([0-9]*/delete)$');
+router.addRoute('wordDelete', '^#/words/delete/([0-9]*)$');
 
 /** Word Add */
 router.addRoute('wordAdd', '^#/words/add$');
 
+// const updateCallback = function() {
+//     var form = false;
+//     var length = document.forms.length;
+//     for(var i = 0; i < length; i++) {
+//         if(form.id == "updateForm") {
+//             form = document.forms[i];
+//         }
+//     }
 
+//     id = form.id.value;
+//     word =  form.word.value;
+//     def =  form.def.value;
+//     example =  form.example.value;
+
+//     var button = document.getElementById("updateBtn");
+//     button.onclick = function() {
+//         api.updateWord(id, word, def, example)
+//     }
+// }
