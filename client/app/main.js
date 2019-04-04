@@ -106,8 +106,13 @@ app.addComponent({
                 "def": def,
                 "example": example
             }
+            console.log(JSON.stringify(data));
             fetch("http://localhost:3000/words/update", {
                 method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                    // "Content-Type": "application/x-www-form-urlencoded",
+                },
                 body: JSON.stringify(data)
             })
         }
@@ -143,17 +148,27 @@ app.addComponent({
 app.addComponent({
     name: 'wordDelete',
     model: {
-        word: {}
+        word: {},
+        wordDelete(id) {
+            data = {"id": id}
+            fetch("http://localhost:3000/words/delete", {
+                method: 'DELETE',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data)
+            })
+        }
     },
     view(model) {
-        return ;                                                                                                                  
+        return model.wordDelete(model.word.WordID);                                                                                                                  
     },
     controller(model) {
         api
-            .getWord(router.params[0])
-            .then(result => {
-                model.word = result[0];
-            });                                          
+        .getWord(router.params[1])
+        .then(result => {
+            model.word = result[0];
+        });                                          
     }
 });
 

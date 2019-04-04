@@ -28,7 +28,7 @@ exports.delete_word = function(req, res) {
 };
 
 exports.update_word = function(req, res) {    
-    //res.send(req.body.id + '');
+    console.log(req.body.id, req.body.word, req.body.def, req.body.example);
     word.updateWord(req.body.id, req.body.word, req.body.def, req.body.example, function() {
         res.send('Word updated')
     });
