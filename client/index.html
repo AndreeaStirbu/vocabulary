@@ -4,15 +4,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Vocabulary Buildre</title>
+    <title>Vocabulary Builder</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet" />
     <link href="style.css" rel="stylesheet" />
   </head>
 
   <body>
-    <h1><a href = "#/words">Words</a></h1>
+    <section class="header">
+      <div>
+          <h1>Vocabulary Builder</h1>
+      </div>
+    </section>
+
+    <div id="searchContainer">
+      <input type="text" id="search-bar" placeholder="Looking for a word?">
+    </div>
+
     <div id="app"></div>
+
+    <section class="footer">
+      <div>
+        <button id="addBtn">Add Word</button>
+      </div>
+    </section>
 
     <script src="app/lib/API.js"></script>
     <script src="app/lib//app.js"></script>
