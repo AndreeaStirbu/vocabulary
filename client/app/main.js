@@ -1,4 +1,4 @@
-const app = new App('#app');
+const app = new Component('#app');
 const api = new API();
 
 const wordTemplate = (word) => `
@@ -11,20 +11,10 @@ const wordTemplate = (word) => `
       <p>${word.Example}</p>
     </section>
   </a>
-  <a href="#/words/update/${word.WordID}"><button data-update-button-id="${word.WordID}" class="btn-update">Edit</button></a>
-  <a href="#/words/delete/${word.WordID}"><button data-delete-button-id="${word.WordID}" class="btn-delete">Delete</button></a>
+  <a href="#/words/update/${word.WordID}"><button data-update-button-id="${word.WordID}" class="updateBtn">Edit</button></a>
+  <a href="#/words/delete/${word.WordID}"><button data-delete-button-id="${word.WordID}" class="deleteBtn">Delete</button></a>
 </section>
 `;
-
-app.addComponent({
-    name: 'home',
-    model: {},
-    view(model){
-        return `<a href = "#/words"><h1>List of words</h1></a>
-                <a href = "#/words/add"><button>Add a word</button></a>`
-    },
-    controller(model){}
-})
 
 app.addComponent({
     name: 'words',
@@ -43,13 +33,7 @@ app.addComponent({
         api
             .getWords()
             .then(result => {
-                model.words = result;
-                // model.words.forEach(element => {
-                //     editBtn = document.querySelector(`[data-update-button-id="${element.WordID}"]`);
-
-                //     editBtn.addEventListener('click', e => {});
-                // })
-           
+                model.words = result;           
             })
     }
 });
@@ -98,31 +82,13 @@ app.addComponent({
 app.addComponent({
     name: 'wordEdit',
     model: {
-        word: {},
-        wordUpdate(id, word, def, example) {
-            data = {
-                "id": id,
-                "word": word,
-                "def": def,
-                "example": example
-            }
-            console.log(JSON.stringify(data));
-            fetch("http://localhost:3000/words/update", {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": "application/json",
-                    // "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: JSON.stringify(data)
-            })
-        }
+        word: {}
     },
     view(model) {
         update = function(event) {
-            //alert('helloooo');
             event.preventDefault();
             form = document.getElementById('updateForm');
-            model.wordUpdate(form.id.value, form.word.value, form.def.value, form.example.value);
+            api.updateWord(form.id.value, form.word.value, form.def.value, form.example.value);
         }
 
         return `<form id="updateForm" onsubmit="return update(event)">
@@ -148,20 +114,10 @@ app.addComponent({
 app.addComponent({
     name: 'wordDelete',
     model: {
-        word: {},
-        wordDelete(id) {
-            data = {"id": id}
-            fetch("http://localhost:3000/words/delete", {
-                method: 'DELETE',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data)
-            })
-        }
+        word: {}
     },
     view(model) {
-        return model.wordDelete(model.word.WordID);                                                                                                                  
+        return api.wordDelete(model.word.WordID);                                                                                                                  
     },
     controller(model) {
         api
@@ -174,8 +130,6 @@ app.addComponent({
 
 
 const router = new Router(app);
-/** Home */
-router.addRoute('home', '/index');
 
 /** List of Words */
 router.addRoute('words', '^#/words$');
@@ -191,23 +145,3 @@ router.addRoute('wordDelete', '^#/words/delete/([0-9]*)$');
 
 /** Word Add */
 router.addRoute('wordAdd', '^#/words/add$');
-
-// const updateCallback = function() {
-//     var form = false;
-//     var length = document.forms.length;
-//     for(var i = 0; i < length; i++) {
-//         if(form.id == "updateForm") {
-//             form = document.forms[i];
-//         }
-//     }
-
-//     id = form.id.value;
-//     word =  form.word.value;
-//     def =  form.def.value;
-//     example =  form.example.value;
-
-//     var button = document.getElementById("updateBtn");
-//     button.onclick = function() {
-//         api.updateWord(id, word, def, example)
-//     }
-// }

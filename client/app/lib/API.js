@@ -14,19 +14,31 @@ class API {
     .then(res => res.json())
    }
 
-  
-
    updateWord(id, word, def, example) {
-    var formData = new FormData();
-    formData.append('WordID', id);
-    formData.append('Word', word);
-    formData.append('Meaning', def);
-    formData.append('Example', example);
+        data = {
+            "id": id,
+            "word": word,
+            "def": def,
+            "example": example
+        }
+        fetch("http://localhost:3000/words/update", {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+   }
 
-    fetch(url, {
-        method: 'PUT',
-        body: formData
-      })
+   deleteWord(id) {
+        data = {"id": id}
+        fetch("http://localhost:3000/words/delete", {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
    }
 
    

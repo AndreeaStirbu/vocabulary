@@ -1,4 +1,4 @@
-class App {
+class Component {
     constructor(selector) {
         this.appElement = document.querySelector(selector);
         this.componentsByName = {};
