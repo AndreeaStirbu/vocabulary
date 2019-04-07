@@ -1,6 +1,6 @@
 class Router {
-    constructor(app) {
-        this.app = app;
+    constructor(component) {
+        this.component = component;
         this.routes = [];
         this.hashChange = this.hashChange.bind(this);
 
@@ -18,9 +18,9 @@ class Router {
         
         if(route) {
             this.params = new RegExp(route.url).exec(hash);
-            this.app.showComponent(route.name);
+            this.component.showComponent(route.name);
         } else {
-            this.app.showComponent();
+            this.component.showComponent();
         }
     }
 }
