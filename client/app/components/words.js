@@ -1,5 +1,4 @@
 const api = new API();
-
 const wordTemplate = (word) => `
 
 <section class="word-listing">
@@ -14,29 +13,6 @@ const wordTemplate = (word) => `
   <a href="#/words/delete/${word.WordID}"><button data-delete-button-id="${word.WordID}" class="deleteBtn">Delete</button></a>
 </section>
 `;
-
-app.addComponent({
-    name: 'words',
-    model: {
-        words: []
-    },
-    view(model) {
-        const wordsHTML = model.words.reduce((html, word) => html + `<li>${wordTemplate(word)}</li>`, '')
-        return `
-            <ul class = "words">
-                ${wordsHTML}
-            </ul>
-        `;
-    },
-    controller(model) {
-        api
-            .getWords()
-            .then(result => {
-                model.words = result;           
-            })
-    }
-});
-
 
 // app.addComponent({
 //     name: 'word',
@@ -56,3 +32,22 @@ app.addComponent({
         
 //     }
 // });
+
+const wordListComponent = new Component('wordsList', {wordList: []});
+wordListComponent.view = function() {
+    const wordsHTML = this.model.wordList.reduce((html, word) => html + `<li>${wordTemplate(word)}</li>`, '')
+            return `
+                <ul class = "words">
+                    ${wordsHTML}
+                </ul>
+            `;
+};
+wordListComponent.controller = function() {
+    api
+    .getWords()
+    .then(result => {
+        this.model.wordList = result;           
+    })
+}
+
+export default wordListComponent;
