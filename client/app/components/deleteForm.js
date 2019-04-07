@@ -1,18 +1,15 @@
 const api = new API();
 
-app.addComponent({
-    name: 'wordDelete',
-    model: {
-        word: {}
-    },
-    view(model) {
-        return api.wordDelete(model.word.WordID);                                                                                                                  
-    },
-    controller(model) {
-        api
+const deleteWordComponent = new Component('deleteForm', {word: {}})
+deleteWordComponent.view = function() {
+    return api.wordDelete(model.word.WordID);   
+}
+deleteWordComponent.controller = function() {
+    api
         .getWord(router.params[1])
         .then(result => {
             model.word = result[0];
-        });                                          
-    }
-});
+        });  
+}
+
+export default deleteWordComponent;

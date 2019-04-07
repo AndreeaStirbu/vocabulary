@@ -1,15 +1,8 @@
-html {
-    margin: 0px;
-    height: 100%;
-    width: 100%;
- }
- 
- body {
-    margin: 0px;
-    min-height: 100%;
-    width: 100%;
- }
-
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
  /* HEADER */
 .header h1{
     margin:0; /** Remove default padding*/
@@ -86,29 +79,18 @@ input:focus::-webkit-input-placeholder{
     
 }
 
+
 /* WORD CARD */
-.updateBtn, .deleteBtn {
-    border: none;
-    
+#mainContainer {
+    margin-top: 2rem;
 }
 
-
-#app {
-    display: inline;
+ul#listWords {
+    list-style-type: none;
 }
 
-ul {
-    display: inline-flex
+ul#listWords li{
+    background: gray;
+    display: inline-block;
 }
 
-li {
-    margin: 70px;
-    list-style: none;
-    text-align:center;
-    background-color: white;
-    color: #6200EE;
-}
-
-a {
-    text-decoration-line: none
-}

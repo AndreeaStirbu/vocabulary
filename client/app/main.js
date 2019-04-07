@@ -1,13 +1,9 @@
-import wordListComponent from '/app/components/words.js'
+import {wordListComponent} from '/app/components/words.js'
 import searchBarComponent from '/app/components/searchBar.js'
+import {addBtnComponent} from '/app/components/addForm.js'
+import initContainer from '/app/lib/utils.js'
 
-const mainContainer = new Container('#mainContainer');
-const wordsList = wordListComponent;
-mainContainer.addComponent(wordsList);
-mainContainer.showComponent(wordsList.name);
-
-const searchContainer = new Container('#searchContainer');
-const searchBar = searchBarComponent;
-searchContainer.addComponent(searchBar);
-searchContainer.showComponent(searchBar.name);
+const mainContainer = initContainer('#mainContainer', wordListComponent); 
+const searchContainer = initContainer('#searchContainer', searchBarComponent); 
+const footerContainer = initContainer('#addBtnContainer', addBtnComponent); 
 

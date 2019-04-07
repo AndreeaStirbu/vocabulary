@@ -1,46 +1,40 @@
 const api = new API();
-const wordTemplate = (word) => `
+const wordCompleteTemplate = (word) => `
 
 <section class="word-listing">
-  <a href="#/words/${word.WordID}">
     <h3 class="name">${word.Word}</h3>
     <section>
       <p>${word.Meaning}</p>
       <p>${word.Example}</p>
     </section>
-  </a>
-  <a href="#/words/update/${word.WordID}"><button data-update-button-id="${word.WordID}" class="updateBtn">Edit</button></a>
-  <a href="#/words/delete/${word.WordID}"><button data-delete-button-id="${word.WordID}" class="deleteBtn">Delete</button></a>
+  <button data-update-button-id="${word.WordID}" class="updateBtn">Edit</button>
+  <button data-delete-button-id="${word.WordID}" class="deleteBtn">Delete</button>
 </section>
 `;
 
-// app.addComponent({
-//     name: 'word',
-//     model: {
-//         word: {}
-//     },
-//     view(model) {
-      
-//         return wordTemplate(model.word);
-//     },
-//     controller(model) {
-//         api
-//             .getWord(router.params[1])
-//             .then(result => {
-//                 model.word = result[0];
-//             }); 
-        
-//     }
-// });
+const wordSimpleTemplate = (word) => `${word.Word}`;
+
+const wordComponent = new Component('word', {word: {}});
+wordComponent.view = function() {
+  return wordTemplate(model.word);
+};
+wordComponent.controller = function() {
+  api
+    .getWord(router.params[1])
+    .then(result => {
+      model.word = result[0];
+    }); 
+}
 
 const wordListComponent = new Component('wordsList', {wordList: []});
 wordListComponent.view = function() {
-    const wordsHTML = this.model.wordList.reduce((html, word) => html + `<li>${wordTemplate(word)}</li>`, '')
-            return `
-                <ul class = "words">
-                    ${wordsHTML}
-                </ul>
-            `;
+    const wordsHTML = this.model.wordList.reduce((html, word) => html + `<li>${wordSimpleTemplate(word)}</li>`, '')
+    return 
+    `<div class="simple wordCard">
+      <ul id="listWords">
+        ${wordsHTML}
+      </ul>
+    </div>`;
 };
 wordListComponent.controller = function() {
     api
@@ -50,4 +44,4 @@ wordListComponent.controller = function() {
     })
 }
 
-export default wordListComponent;
+export {wordComponent, wordListComponent};
