@@ -28,9 +28,8 @@ wordComponent.controller = function() {
 
 const wordListComponent = new Component('wordsList', {wordList: []});
 wordListComponent.view = function() {
-    const wordsHTML = this.model.wordList.reduce((html, word) => html + `<li>${wordSimpleTemplate(word)}</li>`, '')
-    return 
-    `<div class="simple wordCard">
+    const wordsHTML = this.model.wordList.reduce((html, word) => html + `<li>${wordSimpleTemplate(word)}</li>`, '');
+    return `<div class="simple wordCard">
       <ul id="listWords">
         ${wordsHTML}
       </ul>
