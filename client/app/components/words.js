@@ -1,5 +1,5 @@
 const api = new API();
-const wordCompleteTemplate = (word) => `
+const wordComplexTemplate = (word) => `
 
 <section class="word-listing">
     <h3 class="name">${word.Word}</h3>
@@ -28,12 +28,13 @@ wordComponent.controller = function() {
 
 const wordListComponent = new Component('wordsList', {wordList: []});
 wordListComponent.view = function() {
-    const wordsHTML = this.model.wordList.reduce((html, word) => html + `<li>${wordSimpleTemplate(word)}</li>`, '');
-    return `<div class="simple wordCard">
+    const wordsHTML = this.model.wordList.reduce((html, word) => html + `<li class="card">${wordSimpleTemplate(word)}</li>`, '');
+
+    return `
       <ul id="listWords">
         ${wordsHTML}
-      </ul>
-    </div>`;
+      </ul>`;
+     
 };
 wordListComponent.controller = function() {
     api
@@ -41,6 +42,10 @@ wordListComponent.controller = function() {
     .then(result => {
         this.model.wordList = result;           
     })
+    .catch(error => {
+      console.log(error);
+    });
+        
 }
 
 export {wordComponent, wordListComponent};

@@ -3,23 +3,33 @@
     margin: 0;
     box-sizing: border-box;
 }
- /* HEADER */
-.header h1{
-    margin:0; /** Remove default padding*/
-    display: inline-block;  /** Make width as big as the content*/
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+body {
+    overflow:auto;
 }
-
-.header div {
+ /* HEADER */
+#headerContainer {
     position: relative;
-    margin:0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
     background-color: #03A9F4;
     width: 100%;
     height: 5rem;
-    text-align: center;
+}
+
+#search-bar {
+    /**get the width and height from the container*/
+    width: 20rem;
+    height: 2rem;
+    border-bottom: 1px solid #D0CFCE;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-size: 1rem;
+    padding: 0 20px; /**padding fot the placeholder/*/
+    outline: none;
+    background: none;
 }
 
 /* FOOTER */
@@ -46,29 +56,6 @@
     cursor: pointer;
 }
 
-/* SEARCH BAR*/
-#searchContainer {
-    width: 20rem;
-    height: 2rem;
-    display:block;
-    margin: 0 auto;
-    margin-top: 3rem;
-}
-
-input#search-bar {
-    margin: 0 auto; /*for being horizontally centered*/
-    /**get the width and height from the container*/
-    width: 100%; 
-    height: 100%;
-    border-bottom: 1px solid #D0CFCE;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    font-size: 1rem;
-    padding: 0 20px; /**padding fot the placeholder/*/
-    outline: none;
-}
-
 input#search-bar:focus {
     border-bottom: 1px solid #008ABF;
     color: black;
@@ -83,14 +70,34 @@ input:focus::-webkit-input-placeholder{
 /* WORD CARD */
 #mainContainer {
     margin-top: 2rem;
+    position: relative;
 }
 
 ul#listWords {
     list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: center;
+    overflow: auto;
 }
 
 ul#listWords li{
-    background: gray;
-    display: inline-block;
+    margin: 1rem;
+    width: 20rem;
+    height: 20rem;
+    text-align: center;
+    
+   
 }
 
+ul#listWords li:hover{
+    background: #008ABF;
+    /* border-left: 2px solid #008ABF; */
+}
+
+.flip {
+    transform: rotateY(180deg);
+}
